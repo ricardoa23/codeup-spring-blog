@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FirstController {
 
 
-    @GetMapping("/hello")
-    @ResponseBody
-    public String returnHelloWorld() {
-        return "Hello World!";
-    }
+//    @GetMapping("/hello")
+//    @ResponseBody
+//    public String returnHelloWorld() {
+//        return "Hello World!";
+//    }
 
     @GetMapping("/hello/{name}")
     @ResponseBody

@@ -26,8 +26,7 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPostMethod() {
+      public String createPostMethod() {
         return "holder for the post method once the form is submitted";
     }
 }
