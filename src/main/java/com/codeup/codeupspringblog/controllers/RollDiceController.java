@@ -15,11 +15,11 @@ public class RollDiceController {
         return "roll-dice";
     }
 
-    @GetMapping("/roll-dice/{n}")
-    public String rollDiceCompared(@RequestParam int n){
-        int diceRoll = rollDice();
-
-    }
+//    @GetMapping("/roll-dice/{n}")
+//    public String rollDiceCompared(@RequestParam int n){
+//        int diceRoll = rollDice();
+//
+//    }
 
     public static int rollDice() {
         Random random = new Random();
