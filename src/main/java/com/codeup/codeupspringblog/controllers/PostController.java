@@ -1,7 +1,9 @@
 package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Post;
+import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
+import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +15,15 @@ import java.util.List;
 
 @Controller
 public class PostController {
+    private UserRepository userDao;
     private PostRepository postDao;
 
-    public PostController(PostRepository postDao) {
+    public PostController(UserRepository userDao, PostRepository postDao) {
+        this.userDao = userDao;
         this.postDao = postDao;
     }
+
+
 
 
     @GetMapping("/posts")
@@ -36,10 +42,12 @@ public class PostController {
     public String specificPostHolder(@PathVariable Long postNum, Model model) {
 
         Post post = postDao.findById(postNum).get();
+        User user = userDao.findById(post.getId()).get();
 
 //        Post post1 = new Post("taillights for sale", "OEM taillights are for sale after upgrading it (open to trades)");
 //        posts.add(post1);
         model.addAttribute("posts", post);
+        model.addAttribute("user", user);
         return "/posts/show";
     }
 
