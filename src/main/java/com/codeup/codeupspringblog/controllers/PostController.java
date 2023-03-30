@@ -41,13 +41,12 @@ public class PostController {
     @GetMapping("/posts/{postNum}")
     public String specificPostHolder(@PathVariable long postNum, Model model) {
 
-        Post post = postDao.findById(postNum);
-        User user = userDao.findById(post.getId());
-
 //        Post post1 = new Post("taillights for sale", "OEM taillights are for sale after upgrading it (open to trades)");
 //        posts.add(post`1);
+        Post post = postDao.findById(postNum);
+        User user = post.getUser();
         model.addAttribute("posts", post);
-        model.addAttribute("user", user);
+        model.addAttribute("users", user);
         return "/posts/show";
     }
 
