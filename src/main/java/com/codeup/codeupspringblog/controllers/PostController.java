@@ -4,6 +4,7 @@ import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
+import com.codeup.codeupspringblog.services.EmailService;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +16,14 @@ import java.util.List;
 
 @Controller
 public class PostController {
-    private UserRepository userDao;
-    private PostRepository postDao;
+    private final UserRepository userDao;
+    private final PostRepository postDao;
+    private final EmailService emailService;
 
-    public PostController(UserRepository userDao, PostRepository postDao) {
+    public PostController(UserRepository userDao, PostRepository postDao, EmailService emailService) {
         this.userDao = userDao;
         this.postDao = postDao;
+        this.emailService = emailService;
     }
 
 
@@ -57,6 +60,8 @@ public class PostController {
 
     @PostMapping("/posts/create") // previous arguments passed (@RequestParam String title, @RequestParam  String body)
       public String createPostSubmit(@ModelAttribute Post post) {
+        post.setUser(userDao.findById(1L));
+        emailService.prepareAndSend(post, "New Post Created", "You created a new post your post ID is: " + post.getId());
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -73,4 +78,12 @@ public class PostController {
         postDao.save(post);
         return "redirect:/posts";
     }
+
+    @GetMapping("/")
+    public String landingPage() {
+//        emailService.prepareAndSend("test", "If you see this it worked");
+        return "home";
+
+    }
+
 }
