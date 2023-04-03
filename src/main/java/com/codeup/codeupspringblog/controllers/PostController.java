@@ -40,7 +40,6 @@ public class PostController {
     }
     @GetMapping("/posts/{postNum}")
     public String specificPostHolder(@PathVariable long postNum, Model model) {
-
 //        Post post1 = new Post("taillights for sale", "OEM taillights are for sale after upgrading it (open to trades)");
 //        posts.add(post`1);
         Post post = postDao.findById(postNum);
@@ -51,13 +50,27 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String createPostHolder() {
+    public String createPost(Model model) {
+        model.addAttribute("post", new Post());
         return "/posts/create";
     }
 
-    @PostMapping("/posts/create")
-      public String createPostMethod(@RequestParam String title, @RequestParam  String body) {
-        Post post = new Post(title, body);
+    @PostMapping("/posts/create") // previous arguments passed (@RequestParam String title, @RequestParam  String body)
+      public String createPostSubmit(@ModelAttribute Post post) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/edit/{postNum}")
+    public String editPost(@PathVariable long postNum, Model model) {
+        Post post = postDao.findById(postNum);
+
+        model.addAttribute("post", post);
+        return "/posts/edit";
+    }
+
+    @PostMapping("/posts/edit")
+    public String editPostSubmit(@ModelAttribute Post post) {
         postDao.save(post);
         return "redirect:/posts";
     }
