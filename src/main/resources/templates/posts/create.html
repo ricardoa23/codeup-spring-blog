@@ -7,10 +7,10 @@
 <body>
 <form th:action="@{/posts/create}" th:method="POST" th:object="${post}">
     Title:
-    <input th:field="*{title}" required>
+    <input th:field="*{title}" required />
     <br>
     Body:
-    <input th:field="*{body}" required>
+    <input th:field="*{body}" required />
     <br>
     <button>Submit your Post</button>
 </form>

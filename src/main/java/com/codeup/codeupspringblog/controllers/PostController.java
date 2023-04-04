@@ -55,10 +55,10 @@ public class PostController {
     @GetMapping("/posts/create")
     public String createPost(Model model) {
         model.addAttribute("post", new Post());
-        return "/posts/create";
+        return "posts/create";
     }
 
-    @PostMapping("/posts/create") // previous arguments passed (@RequestParam String title, @RequestParam  String body)
+    @PostMapping("/posts") // previous arguments passed (@RequestParam String title, @RequestParam  String body)
       public String createPostSubmit(@ModelAttribute Post post) {
         post.setUser(userDao.findById(1L));
         emailService.prepareAndSend(post, "New Post Created", "You created a new post your post ID is: " + post.getId());
@@ -66,9 +66,9 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/{postNum}/edit")
-    public String editPost(@PathVariable long postNum, Model model) {
-        Post post = postDao.findById(postNum);
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model) {
+        Post post = postDao.findById(id);
         model.addAttribute("post", post);
         return "/posts/edit";
     }
