@@ -5,6 +5,10 @@
     <title>Answer</title>
 </head>
 <body>
+<p>Your guess</p>
+<p th:text="${guess}"></p>
 
+<p th:text="${roll}"></p>
+<p th:text="${guess == roll ? 'you guessed correctly' : 'try again'}"></p>
 </body>
 </html>
